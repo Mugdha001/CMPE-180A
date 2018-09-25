@@ -12,14 +12,14 @@ void input_matrix(string input_file, vector<vector< int >> &matrix_vector, unsig
 
 void calculate_multiplication(vector<vector< int >> &matrix_vector_1, vector<vector< int >> &matrix_vector_2, unsigned int col1, unsigned int col2);
 //Functionality: matrix multiplication of the two input matrices
-//Precondition : two 2d vectors should be obtained from the input_matrix function.
+//Precondition : two 2d vectors should be obtained from the input_matrix function
 //Postcondition: matrix multiplication is printed on screen
-int main() 
-{ 
+int main(int argc, char** argv) 
+{  
+    string input_file_name1, input_file_name2;							//input files
+    input_file_name1= argv[1], input_file_name2 = argv[2];  
 	vector<vector< int >> matrix1, matrix2;								// two matrices
-	unsigned int col1, col2;											// number of columns of the two matrices
-	string input_file_name1 = ".\\input_files\\input1_0.txt", input_file_name2 = ".\\input_files\\input1_1.txt";  // input files
-	
+	unsigned int col1, col2;											// number of columns of the two matrices	
 	//function call/s
 	input_matrix(input_file_name1, matrix1, col1);
 	input_matrix(input_file_name2, matrix2, col2);	
@@ -41,13 +41,10 @@ void input_matrix(string input_file, vector<vector< int >> &matrix_vector, unsig
 		stringstream ss(str);											//stringstream is easier for string manipulations and works like cin
         for(int i = 0; ss >> i; ) {										//works for integer, ignores characters and whitespaces
         numbers.push_back(i);											
-        col++;
-        
+        col++;        
     }
     matrix_vector.push_back(numbers);
-   }
-	
-    
+   }    
 }
 file.close();
 }
@@ -68,8 +65,7 @@ while(i<row1){															//iterate till rows in matrix1 exist
 		cout<< sum << " ";
 		j++;
 }
-cout<<endl<<endl;
+cout<<endl;
 	i++;
 }	
-
 }
