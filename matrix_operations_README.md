@@ -1,4 +1,4 @@
-Write a program that multiplies two matrices given to you in two files whose names will be passed via command line arguments, your program must print out the output matrix in the same format as the matrices in files:
+Write a program that multiplies two matrices given to you in two files whose names will be passed via command line arguments, your program must print out the output matrix on STDOUT in the same format as the matrices in files:
 
 
 matrix1.txt
