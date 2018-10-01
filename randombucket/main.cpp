@@ -8,6 +8,7 @@ class RandomNumberBucket
 {
 private:
     int my_range;
+    bool empty_bucket;
     vector <int> bucket;   
  
 public:
@@ -24,37 +25,35 @@ public:
 };
  
 int main(){
-	//int range;
-	RandomNumberBucket bucket1(0);
+	RandomNumberBucket bucket_obj(1);
 	//RandomNumberBucket bucket2(50);
-	int popped_number = bucket1.pop();
-	//cout << popped_number << endl;
-	int current_size = bucket1.size();
-	cout << current_size <<endl;
-	bool a = bucket1.empty();
-	cout <<  a;
-	bucket1.refill();
-	//int size();
-	//bool empty();
-	
+	//int popped_number = bucket_obj.pop();	
+	//int current_size = bucket_obj.size();
+	//bool emp = bucket_obj.empty();
+	bucket_obj.pop();
+	bucket_obj.size();
+	bucket_obj.empty();
+	bucket_obj.refill();
 	return 0;
 }
 
 RandomNumberBucket::RandomNumberBucket() //default constructor
-{
-	my_range=40;
-	for (int i = 1; i < 40; i++)
+{	
+	bucket.resize(39);
+	my_range=39;
+	for (int i = 1; i <= 39; i++)
 	{
-		bucket.push_back(i);
+		bucket[i]=i;
 	}	
 }
 
 RandomNumberBucket::RandomNumberBucket(int range) //parametrized constructor
 {
+	bucket.resize(range);
 	my_range=range;
 	for (int i = 1; i <= range; i++)
 	{
-		bucket.push_back(i);
+		bucket[i]=i;
 	}	
 }
 
@@ -67,29 +66,27 @@ int RandomNumberBucket :: pop()
 		int r = rand() % size;  // generate a random position
 		temp = bucket[r];
 		bucket.erase (bucket.begin()+ r);
-			//cout << size << "\t " << temp <<endl;
 		return temp;
 		}
 	else return -1;
 }
 
-int RandomNumberBucket :: size()
+int RandomNumberBucket :: size()										//return size of bucket
 {
-	return bucket.size();
+	return bucket.size();		
 }
 
-bool RandomNumberBucket :: empty()
+bool RandomNumberBucket :: empty()										//return true if bucket size is 0 else false 
 {
-	return (bucket.size());
+	empty_bucket= (!bucket.size());
+	return empty_bucket;
+	
 }
 
 void RandomNumberBucket :: refill()
 {
-	cout << "\n" << my_range << "\tHi"<< endl;
-	cout << bucket.empty() << "\tHello\n";
-	if(bucket.empty())
-	{
-		for (int i = 1; i <= my_range; i++)
-		bucket.push_back(i);
+	if(empty_bucket)
+	{	bucket.resize(my_range);
+		for (int i = 1; i <= my_range; i++)		bucket[i] = i;
 	}
 }
