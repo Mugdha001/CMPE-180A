@@ -1,37 +1,62 @@
 #include "RandomNumberBucket.h"
+#include <ctime>
  
+void RandomNumberBucket::initialize() //initialize function
+{	
+	bucket.resize(my_range);
+	for (int i = 0; i < my_range; i++)
+	{
+		bucket[i]=i+1;
+	}	
+}
 RandomNumberBucket::RandomNumberBucket() //default constructor
 {	
-	bucket.resize(39);
-	my_range=39;
-	for (int i = 1; i <= 39; i++)
-	{
-		bucket[i]=i;
-	}	
+	my_range = 39;
+	initialize();	
 }
 
 RandomNumberBucket::RandomNumberBucket(int range) //parametrized constructor
 {
-	bucket.resize(range);
-	my_range=range;
-	for (int i = 1; i <= range; i++)
-	{
-		bucket[i]=i;
-	}	
+	 my_range=range;
+	 initialize();
 }
 
 int RandomNumberBucket :: pop()
 {	
 	if(bucket.size()){
-		int temp;
+		int popped;
 		srand(time(0));
 		int size = bucket.size();
 		int r = rand() % size;  // generate a random position
-		temp = bucket[r];
+		popped = bucket[r];
 		bucket.erase (bucket.begin()+ r);
-		return temp;
+		return popped;
 		}
 	else return -1;
+}
+
+int RandomNumberBucket :: popWithRefill()
+{	
+	if(bucket.size())
+	{
+		int popped;
+		srand(time(0));
+		int size = bucket.size();
+		int r = rand() % size;  // generate a random position
+		popped = bucket[r];
+		bucket.erase (bucket.begin()+ r);
+		return popped;
+		}
+	else{
+		initialize();
+		int popped;
+		srand(time(0));
+		int size = bucket.size();
+		int r = rand() % size;  // generate a random position
+		popped= bucket[r];
+		bucket.erase (bucket.begin()+ r);
+		return popped;
+		}
 }
 
 int RandomNumberBucket :: size()										//return size of bucket
@@ -41,15 +66,10 @@ int RandomNumberBucket :: size()										//return size of bucket
 
 bool RandomNumberBucket :: empty()										//return true if bucket size is 0 else false 
 {
-	empty_bucket= (!bucket.size());
-	return empty_bucket;
-	
+	return (!bucket.size());
 }
 
 void RandomNumberBucket :: refill()
 {
-	if(empty_bucket)
-	{	bucket.resize(my_range);
-		for (int i = 1; i <= my_range; i++)		bucket[i] = i;
-	}
+	initialize();	
 }

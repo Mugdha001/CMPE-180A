@@ -7,16 +7,19 @@ class RandomNumberBucket
 {
 private:
     int my_range;
-    bool empty_bucket;
     vector< int > bucket;   
+    vector< int > popped_items; 
  
 public:
     RandomNumberBucket();
     RandomNumberBucket(int range);
+    void initialize();
 
     int pop(); // return -1 if empty
+    
+    int popWithRefill(); //popwithrefill method that always pops
 
-    void refill();
+    void refill(); // refill elements
 
     int size(); // Number of elements left
 
