@@ -14,20 +14,18 @@ private:
     bitset<501> bitvector;
  
 public:
-    RandomNumberSet();
-    RandomNumberSet(int range);
-    void initialize();
+    RandomNumberSet();											//default constructor
+    RandomNumberSet(int range);  								//parametrized constructor
 
-    void reset(); // reset elements
+    void reset(); 												// reset elements
 
-    int size(); // Number of elements left
+    int size(); 												// Number of elements left
 
-    bool set(int i); // whether empty or not
+    bool set(int i); 											// whether empty or not
     
-    // Overload + operator to add two Box objects.
-    int operator-(const RandomNumberSet& random_obj) const;
-    //string operator<<(const RandomNumberSet& random_obj) const;
-    friend void operator<<(ostream& os, const RandomNumberSet& random_obj);
+	int operator-(const RandomNumberSet& random_obj) const;		// Overload + operator
+    
+    friend void operator<<(ostream& os, const RandomNumberSet& random_obj);  //overload << operator
     
 };
  

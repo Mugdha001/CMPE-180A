@@ -29,17 +29,16 @@ void RandomNumberSet :: reset()
 bool RandomNumberSet :: set(int i)
 { 
     if(i==0 || i>set_range){
-	cerr << "The RandomNumberSet can store numbers between 1 to " << set_range<<" in the RandomNumberSet bitvector.\nPlease input accordingly." << endl;
-	exit(1);
+	cerr << "The number inputed is "<<i <<".The RandomNumberSet can store numbers between 1 to " << set_range<<" in the RandomNumberSet bitvector.\nPlease input accordingly." << endl;
+	return false;
 	}
 	if(bitvector[i]==0 && bitvector.count()<5 ){
-		//cout << "in set function bitvector.count() "<<i << " " << bitvector.count() <<endl;
 		bitvector.set(i);
 		return true;
 	}
 	else if(bitvector[i]==0 && bitvector.count()>=5){
 		cerr << "Cannot set number " <<i <<" in the bitset as it is full to it's capacity of 5 numbers.\nPlease reset it if more numbers to be added." <<endl;
-		exit(1);
+		return false;
 	}
 	else{
 		return false;
@@ -53,11 +52,7 @@ int RandomNumberSet :: size()
 }
 
 int RandomNumberSet:: operator-(const RandomNumberSet& random_obj) const{         
-         //cout << "this->bitvector.size()" << this->bitvector.count() << endl;
-        // int difference = (this->bitvector).count() + random_obj.bitvector.count()-2*(this->bitvector & random_obj.bitvector).count();
-         
          int temp = (this->bitvector & random_obj.bitvector).count();
-         //cout << "temp" << temp;
          if((this->bitvector).count() > random_obj.bitvector.count()){
 			 return (this->bitvector).count()-temp;
 		 }
@@ -69,13 +64,11 @@ int RandomNumberSet:: operator-(const RandomNumberSet& random_obj) const{
 		 }
 			 
       }
-void operator<<(ostream& os, const RandomNumberSet& random_obj){
+void operator<<(ostream& os, const RandomNumberSet& random_obj){ 
 		 cout<<endl;
 		 for(int i=0;i<501;i++){
 			 if(random_obj.bitvector[i]==1){
 				 cout << setw(3)<< i;
 		 }
-		 }
-		 
-		 
-      }
+		 }	 
+ }
