@@ -1,65 +1,81 @@
 #include "RandomNumberSet.h"
-#include <cstdlib>   // for srand and rand
-#include <ctime>     // for time		
-#define INTBIT 32 // 1 byte i.e. 8*4=32 bits per integer
+#include <sstream>
+#include <iomanip>
 
-void RandomNumberSet::initialize() //initialize function
-{	srand(time(NULL));
-	set_num=5;
-	
-	while(set_num){	
-	int intrandom = rand() % set_range + 1;  // generate a random position
-	cout << "random no" << intrandom <<endl;
-	bitset<INTBIT> b_int(intrandom);
-	bitlist.push_back(b_int);
-	set_num--;
-	}
-}
+
 RandomNumberSet::RandomNumberSet() //default constructor
 {	
 	set_range = 39;
-	initialize();	
 }
 
 RandomNumberSet::RandomNumberSet(int range) //parametrized constructor
 {
 	if(range<5){
-		cerr << "The program requires minimum 5 numbers" << endl;
+		cerr <<"The value of 'N' is " << range << ".\nIt is required to be atleast 5 (for 5 unique numbers).\nPlease input accordingly." << endl;
+		exit(1);
+	}
+	if(range>500){
+		cerr <<"The value of 'N' is " << range << ".\nThe maximum value N can have is 500 (max size of bitset as set by programmer).\nPlease input accordingly." << endl;
 		exit(1);
 	}
 	 set_range=range;
-	 initialize();
+	 
 }
 
 void RandomNumberSet :: reset()
 {
-	bitlist.clear();
-	set_num=5;
-	while(set_num){
-		bitset<INTBIT> b_int(0);
-		bitlist.push_back(b_int);
-		set_num--;
-	}
+	bitvector.reset();
 }
 bool RandomNumberSet :: set(int i)
-{
-	bitset<INTBIT> b_int(i);
-	if (std :: find( bitlist.begin(),bitlist.end(),b_int ) !=bitlist.end()){
-		return false;
+{ 
+    if(i==0 || i>set_range){
+	cerr << "The RandomNumberSet can store numbers between 1 to " << set_range<<" in the RandomNumberSet bitvector.\nPlease input accordingly." << endl;
+	exit(1);
+	}
+	if(bitvector[i]==0 && bitvector.count()<5 ){
+		//cout << "in set function bitvector.count() "<<i << " " << bitvector.count() <<endl;
+		bitvector.set(i);
+		return true;
+	}
+	else if(bitvector[i]==0 && bitvector.count()>=5){
+		cerr << "Cannot set number " <<i <<" in the bitset as it is full to it's capacity of 5 numbers.\nPlease reset it if more numbers to be added." <<endl;
+		exit(1);
 	}
 	else{
-		/*if(bitlist.size()<5)
-		{
-			bitlist.push_back(b_int);
-		}
-		if(bitlist.size() ==5){
-			bitlist[4] = b_int;
-		}*/
-		return true;
-	}	
+		return false;
+	}
+	
 }
 
 int RandomNumberSet :: size()
 {
-	return bitlist.size();
+	return bitvector.count();
 }
+
+int RandomNumberSet:: operator-(const RandomNumberSet& random_obj) const{         
+         //cout << "this->bitvector.size()" << this->bitvector.count() << endl;
+        // int difference = (this->bitvector).count() + random_obj.bitvector.count()-2*(this->bitvector & random_obj.bitvector).count();
+         
+         int temp = (this->bitvector & random_obj.bitvector).count();
+         //cout << "temp" << temp;
+         if((this->bitvector).count() > random_obj.bitvector.count()){
+			 return (this->bitvector).count()-temp;
+		 }
+		 else if((this->bitvector).count() < random_obj.bitvector.count()){
+			 return random_obj.bitvector.count()-temp;
+		 }
+		 else{
+			 return random_obj.bitvector.count()-temp;
+		 }
+			 
+      }
+void operator<<(ostream& os, const RandomNumberSet& random_obj){
+		 cout<<endl;
+		 for(int i=0;i<501;i++){
+			 if(random_obj.bitvector[i]==1){
+				 cout << setw(3)<< i;
+		 }
+		 }
+		 
+		 
+      }
