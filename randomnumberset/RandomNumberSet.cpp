@@ -10,10 +10,6 @@ RandomNumberSet::RandomNumberSet() //default constructor
 
 RandomNumberSet::RandomNumberSet(int range) //parametrized constructor
 {
-	if(range<5){
-		cerr <<"The value of 'N' is " << range << ".\nIt is required to be atleast 5 (for 5 unique numbers).\nPlease input accordingly." << endl;
-		exit(1);
-	}
 	if(range>500){
 		cerr <<"The value of 'N' is " << range << ".\nThe maximum value N can have is 500 (max size of bitset as set by programmer).\nPlease input accordingly." << endl;
 		exit(1);
