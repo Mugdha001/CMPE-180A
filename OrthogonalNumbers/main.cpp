@@ -4,7 +4,7 @@ int main(){
 	
 	//RandomNumberSet random_obj1;
 	//RandomNumberSet random_obj2(5);
-	OrthogonalNumbers random_obj3;
+	OrthogonalNumbers random_obj3(100,10,10);
 	//OrthogonalNumbers random_obj4(30,15,24);
 	/*cout << "set bit 99 " <<random_obj1.set(1) <<endl;
 	cout << "set bit 20 " <<random_obj1.set(2) <<endl;
@@ -25,7 +25,8 @@ int main(){
 	//overload operator <<
 	cout << random_obj1;
 	cout << random_obj2;*/
-	cout <<random_obj3.generate(6);
+	cout <<random_obj3.generate(10);
+	cout<< random_obj3;
 	return 0;
 }
 

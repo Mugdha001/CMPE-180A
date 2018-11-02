@@ -1,8 +1,5 @@
-//Max value : n=100,c=15,d=15; 
+//Max value : n=100; 
 #include "OrthogonalNumbers.h"
-#include <sstream>
-#include <iomanip>
-
 
 RandomNumberSet::RandomNumberSet() //default constructor
 {	
@@ -75,8 +72,8 @@ OrthogonalNumbers::OrthogonalNumbers(int range, int set, int dis) : RandomNumber
 		cerr <<"The value of 'N' is " << range << ".\nThe maximum value 'N' can have is 100 .\nPlease input accordingly." << endl;
 		exit(1);
 	}
-	if(set>15){
-		cerr <<"The value of 'C' is " << set << ".\nThe maximum value 'C' can have is 15.\nPlease input accordingly." << endl;
+	if(set==0){
+		cerr <<"The value of 'C' is " << set << ".\nThe minimum value 'C' can have is 1.\nPlease input accordingly." << endl;
 		exit(1);
 	}
 	if(dis>set){
@@ -90,35 +87,36 @@ OrthogonalNumbers::OrthogonalNumbers(int range, int set, int dis) : RandomNumber
 
 bool OrthogonalNumbers::generate(int numbersOfRandomNumberSetsToGenerate){
 	srand (time(NULL));
+	if(numbersOfRandomNumberSetsToGenerate==0) {return false;}
 	while(numbersOfRandomNumberSetsToGenerate>0){
-		RandomNumberSet dummyobj(n);
-		while(dummyobj.size()<c){
+		if(countnum>100000000){cout<<"Time out. Generate function taking too long to evaluate. \nNumber of sets generated might not be as desired due to timeout."; return false;}		
+		RandomNumberSet randomnumbersetobj(n);
+		while(randomnumbersetobj.size()!=c){
 			int num_in_set = rand() % n + 1;
-			dummyobj.set(num_in_set);
+			randomnumbersetobj.set(num_in_set);
+			countnum++;
+			
 		}
 		if(ortho.size()==0){
-			ortho.push_back(dummyobj);
+			ortho.push_back(randomnumbersetobj);
 			//cout << dummyobj;
 			numbersOfRandomNumberSetsToGenerate--;
 		}
 		else{
 			unsigned int countme =0;
 			for(unsigned int i =0; i<ortho.size();i++){
-				int dif = dummyobj-ortho[i];
+				int dif = randomnumbersetobj-ortho[i];
 				if(dif>=d){
 					countme++;
 				}
 			}
 			if(countme==ortho.size()){
-				ortho.push_back(dummyobj);
+				ortho.push_back(randomnumbersetobj);				
 				//cout << dummyobj;
 				numbersOfRandomNumberSetsToGenerate--;
 			}
-		}
-	
+		}	
     }
-    cout<<endl;
-
 	return true;
 }
 
@@ -131,3 +129,10 @@ bool OrthogonalNumbers::reset(){
 		return false;
 	}
 }
+void operator<<(ostream& os, const OrthogonalNumbers& random_obj1){ 
+		 cout<<endl;
+		 int x = random_obj1.ortho.size();
+		 for(int i =0; i<x;i++){
+			 cout<<random_obj1.ortho[i];
+		 }
+ }
